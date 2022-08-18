@@ -1,0 +1,45 @@
+.search-form {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgb(14, 10, 238);
+}
+
+.search-form input {
+    margin-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.search-form button {
+    border-radius: 20px;
+}
+
+.load-more {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgb(41, 214, 245);
+    transition: all 200ms linear;
+
+    &.is-hidden {
+        display: none;
+    }
+
+    &:hover {
+        box-shadow: 5px 5px 5px rgb(98, 134, 61);
+        transform: translateY(-5px);
+    }
+
+    &::after {
+        content: "\1F886";
+    }
+}
