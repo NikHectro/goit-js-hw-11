@@ -1,4 +1,10 @@
-export default class ImgsApiService {
+import axios from 'axios';
+const BASE_URL = 'https://pixabay.com/api';
+const API_KEY = '25712416-b7f8b21cfce49117d938a95c8';
+const PARAM =
+  'per_page=40&orientation=horizontal&image_type=photo&safesearch=true';
+
+class ImgsApiService {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
@@ -6,7 +12,7 @@ export default class ImgsApiService {
 
   fetchImg() {
     // console.log(this);
-    const url = `https://pixabay.com/api/?key=29344544-28f8077a689a3611398a04467&q=${this.searchQuery}&image_type=photo&per_page=5&page=${this.page}`;
+    const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&${PARAM}&page=${this.page}`;
 
     return fetch(url)
       .then(response => response.json())
@@ -33,3 +39,5 @@ export default class ImgsApiService {
     this.searchQuery = newQuery;
   }
 }
+
+export { ImgsApiService };
