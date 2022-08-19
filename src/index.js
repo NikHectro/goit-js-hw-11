@@ -21,6 +21,7 @@ const imgsApiService = new ImgsApiService('.load-more');
 const loadMoreBtn = new LoadMoreBtn({ selector: '.load-more', hidden: true });
 
 refs.searchForm.addEventListener('submit', onSearch);
+refs.searchForm.addEventListener('input', onChangeInput);
 loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
 // refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
@@ -37,6 +38,11 @@ function onSearch(evt) {
   imgsApiService.resetPage();
   //   imgsApiService.fetchImg().then(appendHitsMarkup);
   fetchHits();
+}
+
+function onChangeInput(evt) {
+  clearHitsMarkup();
+  loadMoreBtn.hide();
 }
 
 function onLoadMore() {
