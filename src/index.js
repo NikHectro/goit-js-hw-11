@@ -30,6 +30,7 @@ function onSearch(evt) {
   //   console.log(evt.target.value);
   imgsApiService.query = evt.currentTarget.elements.searchQuery.value;
   if (imgsApiService.query === '') {
+    loadMoreBtn.hide();
     return Notiflix.Notify.failure('Нічого не введено в поле пошуку');
   }
   loadMoreBtn.show();
