@@ -1,4 +1,6 @@
 import Notiflix from 'notiflix';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 // import '.css/common.css'
 import { ImgsApiService } from './img-api';
 import imgTemplate from './makeMarkup';
@@ -9,6 +11,11 @@ const refs = {
   imgContainer: document.querySelector('.gallery'),
   //   loadMoreBtn: document.querySelector('.load-more'),
 };
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionDelay: 250,
+  showCounter: false,
+  captionsData: 'alt',
+});
 
 const imgsApiService = new ImgsApiService('.load-more');
 const loadMoreBtn = new LoadMoreBtn({ selector: '.load-more', hidden: true });
@@ -20,10 +27,10 @@ loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
 function onSearch(evt) {
   evt.preventDefault();
   clearHitsMarkup();
-  // console.log(evt.target.value);
+  //   console.log(evt.target.value);
   imgsApiService.query = evt.currentTarget.elements.searchQuery.value;
   if (imgsApiService.query === '') {
-    return alert('Нічого не введено в поле пошуку');
+    return Notiflix.Notify.failure('Нічого не введено в поле пошуку');
   }
   loadMoreBtn.show();
   imgsApiService.resetPage();
@@ -33,6 +40,7 @@ function onSearch(evt) {
 
 function onLoadMore() {
   fetchHits(); // можна вставити фетч на мысце ф-ції onLoadMore
+  //   console.log(this);
   //   imgsApiService.fetchImg().then(appendHitsMarkup);
 }
 
@@ -41,6 +49,7 @@ function fetchHits() {
   imgsApiService.fetchImg().then(hits => {
     appendHitsMarkup(hits);
     loadMoreBtn.enable();
+    lightbox.refresh();
   });
 }
 
@@ -51,6 +60,7 @@ function appendHitsMarkup(hits) {
 function clearHitsMarkup() {
   refs.imgContainer.innerHTML = '';
 }
+
 // const url = 'https://pixabay.com/api/';
 // const apiKey = '?key=29344544-28f8077a689a3611398a04467';
 

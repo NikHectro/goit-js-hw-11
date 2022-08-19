@@ -11,14 +11,12 @@ class ImgsApiService {
   }
 
   fetchImg() {
-    // console.log(this);
     const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&${PARAM}&page=${this.page}`;
-
     return fetch(url)
       .then(response => response.json())
       .then(({ hits }) => {
         this.incrementPage();
-        // console.log(data);
+        // console.log(totalHits);
         return hits;
       });
   }
