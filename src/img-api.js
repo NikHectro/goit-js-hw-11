@@ -14,23 +14,50 @@ class ImgsApiService {
     this.page = 1;
   }
 
-  fetchImg() {
+  async fetchImg() {
     const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&${PARAM}&page=${this.page}`;
+    // const response = await fetch(url);
+    // const data = await response.json();
+    // console.log(data);
+    // return data.hits;
+    try {
+      const data = await axios.get(url);
+      if (this.page === 1) {
+        Notiflix.Notify.success(
+          `Hooray! We found ${data.data.totalHits} images.`
+        );
+      }
+      if (data.data.totalHits < this.page * 40) {
+        loadMoreBtn.hide();
+        Notiflix.Notify.info(
+          "We're sorry, but you've reached the end of search results."
+        );
+      }
+      // console.log(totalHits);
+      // console.log(this.page);
+      this.incrementPage();
+      return data.data.hits;
+    } catch (error) {
+      console.log(error);
+    }
+    // return fetch(url)
+    //   .then(response => response.json())
+    //   .then(({ hits, totalHits }) => {
+    //     if (this.page === 1) {
+    //       Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+    //     }
+    //     if (totalHits < this.page * 40) {
+    //       loadMoreBtn.hide();
+    //       Notiflix.Notify.info(
+    //         "We're sorry, but you've reached the end of search results."
+    //       );
+    //     }
+    //     // console.log(totalHits);
+    //     // console.log(this.page);
+    //     this.incrementPage();
 
-    return fetch(url)
-      .then(response => response.json())
-      .then(({ hits, totalHits }) => {
-        if (totalHits < this.page * 40) {
-          loadMoreBtn.hide();
-          Notiflix.Notify.info(
-            "We're sorry, but you've reached the end of search results."
-          );
-        }
-        // console.log(totalHits);
-        // console.log(this.page);
-        this.incrementPage();
-        return hits;
-      });
+    //     return hits;
+    //   });
   }
 
   incrementPage() {
